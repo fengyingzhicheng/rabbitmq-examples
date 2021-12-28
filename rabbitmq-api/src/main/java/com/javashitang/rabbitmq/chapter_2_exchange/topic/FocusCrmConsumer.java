@@ -1,14 +1,8 @@
 package com.javashitang.rabbitmq.chapter_2_exchange.topic;
 
 import com.javashitang.rabbitmq.chapter_2_exchange.direct.DirectExchangeProducer;
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
+import com.javashitang.rabbitmq.util.ConnectionUtil;
+import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -18,9 +12,7 @@ public class FocusCrmConsumer {
 
     public static void main(String[] args) throws Exception {
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("myhost");
-        connectionFactory.setPort(5672);
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();

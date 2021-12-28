@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_3_getMsg;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -19,10 +20,9 @@ public class GetMsgProducer {
     public static final String EXCHANGE_NAME = "getMessage_exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
 
         Channel channel = connection.createChannel();
 

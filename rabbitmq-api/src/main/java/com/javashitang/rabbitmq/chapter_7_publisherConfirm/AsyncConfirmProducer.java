@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_7_publisherConfirm;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,16 +22,16 @@ public class AsyncConfirmProducer {
     public static final String EXCHANGE_NAME = "async_confirm_exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
         // 启用发布者确认模式
         channel.confirmSelect();
 
+        //从exchange到queue不成功时监听
         channel.addReturnListener(new ReturnListener() {
             @Override
             public void handleReturn(int replyCode, String replyText, String exchange, String routingKey, AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -39,12 +40,15 @@ public class AsyncConfirmProducer {
             }
         });
 
+        //发送到exchange时监听
         channel.addConfirmListener(new ConfirmListener() {
+            //成功处理
             @Override
             public void handleAck(long deliveryTag, boolean multiple) throws IOException {
                 log.info("handleAck, deliveryTag: {}, multiple: {}", deliveryTag, multiple);
             }
 
+            //不成功处理
             @Override
             public void handleNack(long deliveryTag, boolean multiple) throws IOException {
                 log.info("handleNack, deliveryTag: {}, multiple: {}", deliveryTag, multiple);

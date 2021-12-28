@@ -1,10 +1,7 @@
 package com.javashitang.rabbitmq.chapter_3_getMsg;
 
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.GetResponse;
+import com.javashitang.rabbitmq.util.ConnectionUtil;
+import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,10 +16,9 @@ public class GetMsgConsumer {
 
     public static void main(String[] args)
         throws IOException, TimeoutException, InterruptedException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         final Channel channel = connection.createChannel();
         channel.exchangeDeclare(GetMsgProducer.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 

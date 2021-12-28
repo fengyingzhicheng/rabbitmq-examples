@@ -1,6 +1,7 @@
 package com.javashitang.rabbitmq.chapter_2_exchange.topic;
 
 import com.javashitang.rabbitmq.chapter_2_exchange.direct.DirectExchangeProducer;
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,9 +12,7 @@ public class FocusAllConsumer {
 
     public static void main(String[] args) throws Exception {
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("myhost");
-        connectionFactory.setPort(5672);
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();

@@ -1,13 +1,7 @@
 package com.javashitang.rabbitmq.chapter_8_backupExchange;
 
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
+import com.javashitang.rabbitmq.util.ConnectionUtil;
+import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -21,10 +15,9 @@ import java.util.concurrent.TimeoutException;
 public class BackupExConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(BackupExProducer.BAK_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
 

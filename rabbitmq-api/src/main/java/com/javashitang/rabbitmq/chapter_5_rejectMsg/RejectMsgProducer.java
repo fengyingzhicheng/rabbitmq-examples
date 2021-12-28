@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_5_rejectMsg;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -20,10 +21,9 @@ public class RejectMsgProducer {
     public static final String EXCHANGE_NAME = "rejectMsg_exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
 
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);

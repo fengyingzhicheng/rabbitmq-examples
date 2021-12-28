@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_12_qos;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,10 +16,9 @@ import java.util.concurrent.TimeoutException;
 public class QosConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(QosProducer.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 

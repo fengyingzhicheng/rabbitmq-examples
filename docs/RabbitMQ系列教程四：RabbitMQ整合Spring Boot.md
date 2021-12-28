@@ -24,7 +24,7 @@ RabbitMQ整合Spring Boot，我们只需要增加对应的starter即可
 ```yaml
 spring:
   rabbitmq:
-    host: myhost
+    host: 120.77.219.136
     port: 5672
     username: guest
     password: guest
@@ -159,7 +159,7 @@ application.yaml的配置改为如下
 ```yaml
 spring:
   rabbitmq:
-    host: myhost
+    host: 120.77.219.136
     port: 5672
     username: guest
     password: guest

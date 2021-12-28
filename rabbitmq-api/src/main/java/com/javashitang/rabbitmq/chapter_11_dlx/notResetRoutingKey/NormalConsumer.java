@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_11_dlx.notResetRoutingKey;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,10 +19,9 @@ public class NormalConsumer {
     public static final String DLX_EXCHANGE_NAME = "accept_dlx_exchange";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(DLX_EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
 

@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_7_publisherConfirm;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,10 +11,9 @@ import java.util.concurrent.TimeoutException;
 public class BatchConfirmConsumer {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
-        Connection connection = factory.newConnection();
+        Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         channel.exchangeDeclare(BatchConfirmProducer.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 

@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_6_failureNotice;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +19,7 @@ public class FailureNoticeProducer {
 
     public static void main(String[] args) throws Exception {
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
         Connection connection = connectionFactory.newConnection();
 
@@ -27,6 +27,7 @@ public class FailureNoticeProducer {
 
         channel.exchangeDeclare(FailureNoticeProducer.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
+        //从exchange到queue不成功时监听
         channel.addReturnListener(new ReturnListener() {
             @Override
             public void handleReturn(int replyCode, String replyText, String exchange, String routingKey, AMQP.BasicProperties properties, byte[] body) throws IOException {

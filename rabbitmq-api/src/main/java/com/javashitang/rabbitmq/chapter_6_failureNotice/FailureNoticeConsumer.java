@@ -1,5 +1,6 @@
 package com.javashitang.rabbitmq.chapter_6_failureNotice;
 
+import com.javashitang.rabbitmq.util.ConnectionUtil;
 import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,8 +11,7 @@ public class FailureNoticeConsumer {
 
     public static void main(String[] args) throws Exception {
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("myhost");
+        ConnectionFactory connectionFactory = ConnectionUtil.getConnectionFactory();
 
         Connection connection = connectionFactory.newConnection();
 
